@@ -50,13 +50,13 @@ module.exports = appInfo => {
     // 单数据库信息配置
     client: {
       // host
-      host: 'localhost',
+      host: 'rm-wz96f97v9in1b1z08wo.mysql.rds.aliyuncs.com',
       // 端口号
       port: '3306',
       // 用户名
-      user: 'root',
+      user: 'huangyi',
       // 密码
-      password: '123456',
+      password: 'fys@4495',
       // 数据库名
       database: 'dd',
     },
