@@ -12,6 +12,7 @@ module.exports = app => {
   router.get('/getUserInfo', controller.home.getUserInfo);
   router.post('/getOrder', controller.order.getOrder);
   router.post('/getAcceptOrder', controller.order.getAcceptOrder);
+  router.post('/logout', controller.home.logout);
   app.io.of('/').route('login', io.controller.login.login);
   app.io.of('/').route('sendOrder', io.controller.order.sendOrder);
   app.io.of('/').route('acceptOrder', io.controller.order.acceptOrder);

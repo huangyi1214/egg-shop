@@ -20,6 +20,11 @@ class HomeController extends Controller {
 
     ctx.body= { code: 0, message: '获取成功', data: { user: {}, roles: ['admin'] } };
   }
+
+  async logout() {
+    const ctx = this.ctx;
+    ctx.body = { code: 0, message: '获取成功', data: {} };
+  }
 }
 
 module.exports = HomeController;
