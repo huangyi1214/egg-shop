@@ -25,14 +25,6 @@ class OrderService extends Service {
         endtime: new Date(order.endtime),
       };
       const obj = await this.ctx.model.Order.create(order_obj, t);
-      let useraccount = await this.ctx.model.Account.findOne({
-        where: {
-          userid: user_obj.id,
-        }
-      });
-
-      await this.ctx.model.Account.update({ freeze: parseFloat(useraccount.freeze) + parseFloat(order.sendnum) }, { where: { accountid: useraccount.accountid }, transaction: t });
-
       await t.commit();
       return {
         code: 0, message: '订单创建成功！', msgname: 'sendOrder', data: obj,
@@ -90,20 +82,7 @@ class OrderService extends Service {
       };
       await this.ctx.model.Order.update({ Consumption: parseFloat(order_db.Consumption) + num }, { where: { id: order_db.id }, transaction: t });
       const obj = await this.ctx.model.OrderAccept.create(order_obj, t);
-      // 修改账户余额
-      const useraccount_send = await this.ctx.model.Account.findOne({
-        where: {
-          userid: order_db.userid,
-        }, transaction: t,
-      });
 
-      await ctx.model.Account.update({
-        Balance: parseFloat(useraccount_send.Balance) - parseFloat(num),
-        freeze: parseFloat(useraccount_send.freeze) - parseFloat(num),
-      }, {
-          where: { accountid: useraccount_send.userid },
-          transaction: t,
-        });
 
       const useraccount_accept = await this.ctx.model.Account.findOne({
         where: {
@@ -111,21 +90,13 @@ class OrderService extends Service {
         }, transaction: t,
       });
 
-      await ctx.model.Account.update({ Balance: parseFloat(useraccount_accept.Balance) + parseFloat(num) }, { where: { accountid: useraccount_accept.userid }, transaction: t });
+      await ctx.model.Account.update({ Balance: parseFloat(useraccount_accept.Balance) + parseFloat(num) }, { where: { accountid: useraccount_accept.accountid }, transaction: t });
+      await t.commit();
 
 
       await ctx.model.Accountflow.findAll({ where: { type: 1 } });
-      const flow_send = {
-        userid: parseInt(order_db.userid),
-        beforechange: parseFloat(useraccount_send.Balance),
-        changeamount: num,
-        Afterchange: parseFloat(useraccount_send.Balance) - num,
-        updatetime: new Date(),
-        type: 1,
-        ordernum: order.acceptOrder,
-      };
-      await ctx.model.Accountflow.create(flow_send);
-
+      
+      
       const flow_accept = {
         userid: user_obj.id,
         beforechange: parseFloat(useraccount_accept.Balance),
@@ -136,7 +107,6 @@ class OrderService extends Service {
         ordernum: order.acceptOrder,
       };
       await this.ctx.model.Accountflow.create(flow_accept);
-      await t.commit();
       return {
         code: 0, message: '抢单成功', msgname: 'acceptOrder',
       };
