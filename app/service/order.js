@@ -141,6 +141,7 @@ class OrderService extends Service {
         code: 0, message: '抢单成功', msgname: 'acceptOrder',
       };
     } catch (error) {
+      console.log(error);
       await t.rollback();
       return {
         code: -999, message: '服务器异常', msgname: 'acceptOrder',

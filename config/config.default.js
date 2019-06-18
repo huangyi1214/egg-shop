@@ -24,10 +24,11 @@ module.exports = appInfo => {
   }
   config.sequelize = {
     dialect: 'mysql', // support: mysql, mariadb, postgres, mssql
-    database: 'dd',
-    host: '127.0.0.1',
+    database: 'db',
+    username: 'huangyi',
+    host: 'rm-wz96f97v9in1b1z08wo.mysql.rds.aliyuncs.com',
     port: 3306,
-    password: '123456',
+    password: 'fys@4495',
     timezone: '+08:00',
     dialectOptions: {
       dateStrings: true,
