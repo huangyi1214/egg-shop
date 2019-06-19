@@ -53,7 +53,7 @@ class OrderService extends Service {
       t = await this.ctx.model.transaction();
 
       const user_obj = JSON.parse(user);
-      const order_db = await this.ctx.model.Order.findOne({ where: { orderNum: order.acceptOrder }, t });
+      const order_db = await this.ctx.model.Order.findOne({ where: { orderNum: order.acceptOrder }, transaction: t });
       if (new Date() < new Date(order_db.createtime) || new Date() > new Date(order_db.endtime)) {
         await t.rollback();
         return {
@@ -73,6 +73,7 @@ class OrderService extends Service {
           num = parseFloat(order_db.sendnum) - parseFloat(order_db.Consumption);
         }
       }
+      console.log('order_db.Consumption:' + order_db.Consumption);
       const order_obj = {
         ordernum: 'B' + this.ctx.helper.getCurDateFormat(),
         acceptorder: order.acceptOrder,
@@ -81,6 +82,7 @@ class OrderService extends Service {
         createtime: new Date(),
       };
       await this.ctx.model.Order.update({ Consumption: parseFloat(order_db.Consumption) + num }, { where: { id: order_db.id }, transaction: t });
+
       const obj = await this.ctx.model.OrderAccept.create(order_obj, t);
 
 
@@ -91,12 +93,6 @@ class OrderService extends Service {
       });
 
       await ctx.model.Account.update({ Balance: parseFloat(useraccount_accept.Balance) + parseFloat(num) }, { where: { accountid: useraccount_accept.accountid }, transaction: t });
-      await t.commit();
-
-
-      await ctx.model.Accountflow.findAll({ where: { type: 1 } });
-      
-      
       const flow_accept = {
         userid: user_obj.id,
         beforechange: parseFloat(useraccount_accept.Balance),
@@ -107,6 +103,8 @@ class OrderService extends Service {
         ordernum: order.acceptOrder,
       };
       await this.ctx.model.Accountflow.create(flow_accept);
+      await t.commit();
+
       return {
         code: 0, message: '抢单成功', msgname: 'acceptOrder',
       };
