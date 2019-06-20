@@ -48,9 +48,7 @@ class OrderService extends Service {
 
       const resource = order.acceptOrder + 'a';
       const lock = await this.app.getlock(this.app).lock(resource, 1000);
-      if (!lock) {
-        return;
-      }
+      
 
       const orderData = await ctx.app.redis.get('order').hgetall(order.acceptOrder);
       console.log('orderData:' + JSON.stringify(orderData));

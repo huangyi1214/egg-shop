@@ -24,11 +24,11 @@ module.exports = appInfo => {
   }
   config.sequelize = {
     dialect: 'mysql', // support: mysql, mariadb, postgres, mssql
-    database: 'db',
-    username: 'huangyi',
-    host: 'rm-wz96f97v9in1b1z08wo.mysql.rds.aliyuncs.com',
+    database: 'dd',
+    username: 'root',
+    host: 'localhost',
     port: 3306,
-    password: 'fys@4495',
+    password: '123456',
     timezone: '+08:00',
     dialectOptions: {
       dateStrings: true,
@@ -50,15 +50,15 @@ module.exports = appInfo => {
     // 单数据库信息配置
     client: {
       // host
-      host: 'rm-wz96f97v9in1b1z08wo.mysql.rds.aliyuncs.com',
+      host: 'localhost',
       // 端口号
       port: '3306',
       // 用户名
-      user: 'huangyi',
+      user: 'root',
       // 密码
-      password: 'fys@4495',
+      password: '123456',
       // 数据库名
-      database: 'db',
+      database: 'dd',
     },
     // 是否加载到 app 上，默认开启
     app: true,
@@ -77,12 +77,22 @@ module.exports = appInfo => {
         password: '',
         db: 0,
       },
+      order: {                 // instanceName. See below
+        port: 6379,          // Redis port
+        host: '127.0.0.1',   // Redis host
+        password: '',
+        db: 2,
+      },
       socket: {
         port: 6379,
         host: '127.0.0.1',
         password: '',
         db: 1,
       },
+      alinode: {
+        appid: 9009909,
+        secret: 'ff21d48befa19a006d424f49bb6a73c18be09b2d',
+      }
     }
   };
   config.io = {

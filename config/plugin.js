@@ -19,12 +19,16 @@ module.exports = {
     enable: true,
     package: 'egg-redis',
   },
-  cors : {
+  cors: {
     enable: true,
     package: 'egg-cors',
   },
-  io : {
+  io: {
     enable: true,
     package: 'egg-socket.io',
   },
+  alinode: {
+    enable: true,
+    package: 'egg-alinode',
+  },  
 };
