@@ -1,24 +1,24 @@
 {
   "development": {
-    "username": "huangyi",
+    "username": "shop",
     "password": "fys@4495",
-    "database": "db",
+    "database": "dd",
     "host": "rm-wz96f97v9in1b1z08wo.mysql.rds.aliyuncs.com",
     "dialect": "mysql",
     "operatorsAliases": false
   },
   "test": {
-    "username": "huangyi",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "username": "shop",
+    "password": "fys@4495",
+    "database": "dd",
+    "host": "rm-wz96f97v9in1b1z08wo.mysql.rds.aliyuncs.com",
     "dialect": "mysql",
     "operatorsAliases": false
   },
   "production": {
-    "username": "huangyi",
+    "username": "shop",
     "password": "fys@4495",
-    "database": "db",
+    "database": "dd",
     "host": "rm-wz96f97v9in1b1z08wo.mysql.rds.aliyuncs.com",
     "dialect": "mysql",
     "operatorsAliases": false
