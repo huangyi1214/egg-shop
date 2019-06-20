@@ -88,11 +88,11 @@ module.exports = appInfo => {
         host: '127.0.0.1',
         password: '',
         db: 1,
-      },   
+      },
     }
   };
   config.alinode = {
-    appid: 9009909,
+    appid: 80334,
     secret: 'ff21d48befa19a006d424f49bb6a73c18be09b2d',
   }
   config.io = {
