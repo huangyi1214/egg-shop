@@ -88,13 +88,13 @@ module.exports = appInfo => {
         host: '127.0.0.1',
         password: '',
         db: 1,
-      },
-      alinode: {
-        appid: 9009909,
-        secret: 'ff21d48befa19a006d424f49bb6a73c18be09b2d',
-      }
+      },   
     }
   };
+  config.alinode = {
+    appid: 9009909,
+    secret: 'ff21d48befa19a006d424f49bb6a73c18be09b2d',
+  }
   config.io = {
     init: {}, // passed to engine.io
     namespace: {
