@@ -2,8 +2,12 @@
 
 module.exports = () => {
   return async (ctx, next) => {
-    ctx.socket.emit('res', 'auth!' );
+    const { socket } = ctx;
+
+    console.log('abc:' + socket.token);
     await next();
-    console.log('失去连接!');
+    socket.on('disconnect', function() {
+      console.log('disconnect');
+    });
   };
 };
