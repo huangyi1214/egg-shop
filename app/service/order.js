@@ -1,8 +1,8 @@
 'use strict';
-
 const Service = require('egg').Service;
 
 class OrderService extends Service {
+
   async sendOrder(order) {
     const { ctx } = this;
     let t;
@@ -16,8 +16,9 @@ class OrderService extends Service {
       t = await this.ctx.model.transaction();
 
       const user_obj = JSON.parse(user);
+      const str_num = 'S' + this.ctx.helper.getCurDateFormat();
       const order_obj = {
-        ordernum: 'S' + this.ctx.helper.getCurDateFormat(),
+        ordernum: str_num,
         userid: user_obj.id,
         sendnum: order.sendnum,
         Consumption: 0,
@@ -26,6 +27,7 @@ class OrderService extends Service {
       };
       const obj = await this.ctx.model.Order.create(order_obj, t);
       await t.commit();
+      await ctx.app.redis.get('order').hmset(str_num, { sendnum: order.sendnum, Consumption: 0 });
       return {
         code: 0, message: '订单创建成功！', msgname: 'sendOrder', data: obj,
       };
@@ -44,8 +46,24 @@ class OrderService extends Service {
     let t;
     try {
 
+      const resource = order.acceptOrder + 'a';
+      const lock = await this.app.getlock(this.app).lock(resource, 1000);
+      if (!lock) {
+        return;
+      }
+
+      const orderData = await ctx.app.redis.get('order').hgetall(order.acceptOrder);
+      console.log('orderData:' + JSON.stringify(orderData));
+      console.log('orderData.sendnum <= orderData.Consumption:', orderData.sendnum + '&' + orderData.Consumption)
+      if (parseFloat(orderData.sendnum) <= parseFloat(orderData.Consumption)) {
+        lock.unlock();
+        return {
+          code: -3, message: '订单数量不足，抢单失败', msgname: 'acceptOrder',
+        };
+      }
       const user = await ctx.app.redis.get('usertoken').get(order.token);
       if (!user) {
+        lock.unlock();
         return {
           code: -1, message: '非法登录，请重新登录',
         };
@@ -56,6 +74,8 @@ class OrderService extends Service {
       const order_db = await this.ctx.model.Order.findOne({ where: { orderNum: order.acceptOrder }, transaction: t });
       if (new Date() < new Date(order_db.createtime) || new Date() > new Date(order_db.endtime)) {
         await t.rollback();
+        lock.unlock();
+
         return {
           code: -2, message: '不在抢单时间范围内', msgname: 'acceptOrder',
         };
@@ -65,6 +85,7 @@ class OrderService extends Service {
       if (parseFloat(order_db.sendnum) - parseFloat(order_db.Consumption) - num < 0) {
         if (parseFloat(order_db.sendnum) - parseFloat(order_db.Consumption) == 0) {
           await t.rollback();
+          lock.unlock();
           return {
             code: -3, message: '订单数量不足，抢单失败', msgname: 'acceptOrder',
           };
@@ -104,13 +125,14 @@ class OrderService extends Service {
       };
       await this.ctx.model.Accountflow.create(flow_accept);
       await t.commit();
-
+      await ctx.app.redis.get('order').hmset(order.acceptOrder, 'Consumption', parseFloat(orderData.Consumption) + num);
+      lock.unlock();
       return {
         code: 0, message: '抢单成功', msgname: 'acceptOrder',
       };
     } catch (error) {
-      console.log(error);
-      await t.rollback();
+      // console.log(error);
+      if (t) await t.rollback();
       return {
         code: -999, message: '服务器异常', msgname: 'acceptOrder',
       };
