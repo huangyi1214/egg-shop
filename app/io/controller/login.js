@@ -7,7 +7,9 @@ module.exports = app => {
       const result = await this.ctx.service.login.login(message);
       this.ctx.socket.token = result.token;
       this.ctx.socket.emit('res', result);
-
+      this.ctx.socket.on('disconnect', function() {
+        console.log('连接中断');
+      });
     }
   }
   return Controller;

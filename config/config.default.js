@@ -25,10 +25,10 @@ module.exports = appInfo => {
   config.sequelize = {
     dialect: 'mysql', // support: mysql, mariadb, postgres, mssql
     database: 'dd',
-    username: 'shop',
-    host: 'rm-wz9i950ta47vuuvw1jo.mysql.rds.aliyuncs.com',
+    username: 'root',
+    host: 'localhost',
     port: 3306,
-    password: 'fys@4495',
+    password: '123456',
     timezone: '+08:00',
     dialectOptions: {
       dateStrings: true,
@@ -50,13 +50,13 @@ module.exports = appInfo => {
     // 单数据库信息配置
     client: {
       // host
-      host: 'rm-wz9i950ta47vuuvw1jo.mysql.rds.aliyuncs.com',
+      host: 'localhost',
       // 端口号
       port: '3306',
       // 用户名
-      user: 'shop',
+      user: 'root',
       // 密码
-      password: 'fys@4495',
+      password: '123456',
       // 数据库名
       database: 'dd',
     },

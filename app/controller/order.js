@@ -11,7 +11,7 @@ class OrderController extends Controller {
       }
       let result = await ctx.service.order.sendOrder(ctx.request.body);
       result.ctx = ctx;
-      ctx.app.io.emit('res', { code: 0, msgname: 'sendOrder', data: result.data });
+      ctx.app.io.emit('res', { code: 0, msgname: 'sendOrder', data: result.data, date: new Date() });
       ctx.helper.success(result);
     } catch (error) {
       ctx.helper.success({ code: -999, msgname: 'sendOrder', message: '服务器异常' });

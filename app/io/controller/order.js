@@ -4,7 +4,7 @@ module.exports = app => {
   class Controller extends app.Controller {
     async sendOrder() {
       const message = this.ctx.args[0];
-      const result = await this.ctx.service.order.sendOrder(message);
+      let result = await this.ctx.service.order.sendOrder(message);
       this.ctx.socket.emit('res', result);
     }
     async acceptOrder() {

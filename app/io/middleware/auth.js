@@ -6,8 +6,6 @@ module.exports = () => {
 
     // console.log('abc:' + socket.token);
     await next();
-    socket.on('disconnect', function() {
-      console.log('disconnect');
-    });
+    
   };
 };
