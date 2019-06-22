@@ -30,6 +30,10 @@ module.exports = appInfo => {
     port: 3306,
     password: 'fys@4495',
     timezone: '+08:00',
+    pool: {
+      max: 2900,
+      
+    }
     dialectOptions: {
       dateStrings: true,
       typeCast(field, next) {
