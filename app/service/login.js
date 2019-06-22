@@ -31,7 +31,7 @@ class LoginService extends Service {
       };
 
     } catch (error) {
-      console.log(error);
+      this.app.logger.error(error);
       return { error, code: -999, message: '登录异常', msgname: 'login' };
     }
 

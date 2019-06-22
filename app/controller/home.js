@@ -8,22 +8,33 @@ class HomeController extends Controller {
     ctx.body = 'hi, egg';
   }
   async login() {
-    const ctx = this.ctx;
-    let result = await ctx.service.login.login(ctx.request.body);
-    result.ctx = ctx;
-
-    ctx.helper.success(result);
+    try {
+      const ctx = this.ctx;
+      const result = await ctx.service.login.login(ctx.request.body);
+      result.ctx = ctx;
+      ctx.helper.success(result);
+    } catch (error) {
+      this.app.logger.error(error);
+    }
   }
   async getUserInfo() {
-    const ctx = this.ctx;
+    try {
+      const ctx = this.ctx;
+      ctx.body = { code: 0, message: '获取成功', data: { user: {}, roles: ['admin'] } };
+    } catch (error) {
+      this.app.logger.error(error);
+    }
 
-
-    ctx.body = { code: 0, message: '获取成功', data: { user: {}, roles: ['admin'] } };
   }
 
   async logout() {
-    const ctx = this.ctx;
-    ctx.body = { code: 0, message: '获取成功', data: {} };
+    try {
+      const ctx = this.ctx;
+      ctx.body = { code: 0, message: '获取成功', data: {} };
+    } catch (error) {
+      this.app.logger.error(error);
+    }
+
   }
   async getonelineusercount() {
     const ctx = this.ctx;
@@ -31,6 +42,7 @@ class HomeController extends Controller {
       const count = await this.getcount();
       ctx.body = { code: 0, message: '获取成功', data: count };
     } catch (error) {
+      this.app.logger.error(error);
       ctx.body = { code: -1, message: '获取失败', data: error };
     }
   }

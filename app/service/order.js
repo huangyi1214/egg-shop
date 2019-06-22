@@ -32,7 +32,7 @@ class OrderService extends Service {
         code: 0, message: '订单创建成功！', msgname: 'sendOrder', data: obj,
       };
     } catch (error) {
-      console.log(error);
+      this.app.logger.error(error);
       await t.rollback();
       return {
         code: -1, message: '服务器异常，订单生成失败！', msgname: 'sendOrder',
@@ -48,7 +48,7 @@ class OrderService extends Service {
 
       const resource = order.acceptOrder + 'a';
       const lock = await this.app.getlock(this.app).lock(resource, 1000);
-      
+
 
       const orderData = await ctx.app.redis.get('order').hgetall(order.acceptOrder);
       console.log('orderData:' + JSON.stringify(orderData));
@@ -129,7 +129,7 @@ class OrderService extends Service {
         code: 0, message: '抢单成功', msgname: 'acceptOrder',
       };
     } catch (error) {
-      // console.log(error);
+      this.app.logger.error(error);
       if (t) await t.rollback();
       return {
         code: -999, message: '服务器异常', msgname: 'acceptOrder',
@@ -138,12 +138,22 @@ class OrderService extends Service {
   }
 
   async getOrder(data) {
-    const result = await this.ctx.model.Order.findAll();
-    return { code: 0, data: result };
+    try {
+      const result = await this.ctx.model.Order.findAll();
+      return { code: 0, data: result };
+    } catch (error) {
+      this.app.logger.error(error);
+
+    }
   }
   async getAcceptOrder(data) {
-    const result = await this.ctx.model.OrderAccept.findAll({ where: { acceptorder: data.ordernum } });
-    return { code: 0, data: result };
+    try {
+      const result = await this.ctx.model.OrderAccept.findAll({ where: { acceptorder: data.ordernum } });
+      return { code: 0, data: result };
+
+    } catch (error) {
+      this.app.logger.error(error);
+    }
   }
 }
 
