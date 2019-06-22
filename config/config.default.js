@@ -32,8 +32,7 @@ module.exports = appInfo => {
     timezone: '+08:00',
     pool: {
       max: 2900,
-      
-    }
+    },
     dialectOptions: {
       dateStrings: true,
       typeCast(field, next) {
