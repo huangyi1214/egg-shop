@@ -3,7 +3,7 @@
     "username": "shop",
     "password": "fys@4495",
     "database": "dd",
-    "host": "rm-wz96f97v9in1b1z08wo.mysql.rds.aliyuncs.com",
+    "host": "rm-wz92n40o4b3h34xu0zo.mysql.rds.aliyuncs.com",
     "dialect": "mysql",
     "operatorsAliases": false
   },
@@ -11,7 +11,7 @@
     "username": "shop",
     "password": "fys@4495",
     "database": "dd",
-    "host": "rm-wz96f97v9in1b1z08wo.mysql.rds.aliyuncs.com",
+    "host": "rm-wz92n40o4b3h34xu0zo.mysql.rds.aliyuncs.com",
     "dialect": "mysql",
     "operatorsAliases": false
   },
@@ -19,7 +19,7 @@
     "username": "shop",
     "password": "fys@4495",
     "database": "dd",
-    "host": "rm-wz96f97v9in1b1z08wo.mysql.rds.aliyuncs.com",
+    "host": "rm-wz92n40o4b3h34xu0zo.mysql.rds.aliyuncs.com",
     "dialect": "mysql",
     "operatorsAliases": false
   }
