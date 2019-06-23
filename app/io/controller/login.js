@@ -9,7 +9,7 @@ module.exports = app => {
         this.ctx.socket.token = result.token;
         this.ctx.socket.emit('res', result);
         this.ctx.socket.on('disconnect', function() {
-          console.log('连接中断');
+          // console.log('连接中断');
         });
       } catch (error) {
         this.app.logger.error(error);

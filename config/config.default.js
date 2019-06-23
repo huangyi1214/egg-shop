@@ -25,14 +25,22 @@ module.exports = appInfo => {
   config.sequelize = {
     dialect: 'mysql', // support: mysql, mariadb, postgres, mssql
     database: 'dd',
-    username: 'root',
-    host: '127.0.0.1',
+    logging: false,
     port: 3306,
-    password: '123456',
+    password: 'fys@4495',
     timezone: '+08:00',
-    pool: {
-      max: 900,
-      idle: 0,
+    replication: {
+      read: [
+        { host: 'rr-wz9jl4stepk86s8z1so.mysql.rds.aliyuncs.com', username: 'shop', password: 'fys@4495' },
+        { host: 'rr-wz99h9624tioin3b68o.mysql.rds.aliyuncs.com', username: 'shop', password: 'fys@4495' },
+      ],
+      write: { host: 'rm-wz92hz04oxb41q024lo.mysql.rds.aliyuncs.com', username: 'shop', password: 'fys@4495' },
+    },
+    pool: { // 如果需要重写链接池，请在 pool 选项中修改
+
+      maxConnections: 20,
+      maxIdleTime: 30000,
+
     },
     dialectOptions: {
       dateStrings: true,
@@ -54,13 +62,13 @@ module.exports = appInfo => {
     // 单数据库信息配置
     client: {
       // host
-      host: '127.0.0.1',
+      host: 'rm-wz92hz04oxb41q024lo.mysql.rds.aliyuncs.com',
       // 端口号
       port: '3306',
       // 用户名
-      user: 'root',
+      user: 'shop',
       // 密码
-      password: '123456',
+      password: 'fys@4495',
       // 数据库名
       database: 'dd',
     },
