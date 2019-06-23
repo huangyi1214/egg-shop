@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package com.shop.sofa.rpc.protobuf;
+option java_multiple_files = false; 
+
+service ShopService {
+    rpc sendOrder (OrderRequest) returns (OrderResponse) {}
+}
+
+message OrderRequest {
+    string token = 1;
+    int32 sendnum = 2;
+    google.protobuf.Timestamp createtime =3;
+    google.protobuf.Timestamp endtime =4;
+}
+
+message OrderResponse {
+    int32 code = 1;
+    string message = 2;
+    orderDate data=3;
+}
+message orderDate {
+    int32 id=1;
+    string ordernum=2;
+    int32 userid=3;
+    int32 sendnum=4;
+    int32 Consumption=5;
+    google.protobuf.Timestamp createtime =6;
+    google.protobuf.Timestamp endtime =7;
+}

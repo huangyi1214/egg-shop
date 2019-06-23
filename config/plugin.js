@@ -30,5 +30,13 @@ module.exports = {
   alinode: {
     enable: true,
     package: 'egg-alinode',
-  },  
+  },
+  rpc: {
+    enable: true,
+    package: 'egg-rpc-base',
+  },
+  sofaRpc: {
+    enable: true,
+    package: 'egg-sofa-rpc',
+  },
 };
