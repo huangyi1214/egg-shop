@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "shop",
-    "password": "fys@4495",
+    "username": "root",
+    "password": "123456",
     "database": "dd",
-    "host": "rm-wz92n40o4b3h34xu0zo.mysql.rds.aliyuncs.com",
+    "host": "127.0.0.1",
     "dialect": "mysql",
     "operatorsAliases": false
   },
