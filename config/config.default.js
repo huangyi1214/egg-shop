@@ -25,7 +25,7 @@ module.exports = appInfo => {
   config.sequelize = {
     dialect: 'mysql', // support: mysql, mariadb, postgres, mssql
     database: 'dd',
-    logging: false,
+    // logging: false,
     port: 3306,
     password: '123456',
     timezone: '+08:00',
@@ -113,11 +113,7 @@ module.exports = appInfo => {
   };
   config.rpc = {
     registry: {
-      address: '127.0.0.1:2181', 
-    },
-    server: {
-      namespace: 'com.shop.sofa.rpc.protobuf',
-      codecType: 'protobuf',
+      address: '127.0.0.1:2181',
     },
   };
 
